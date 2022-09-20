@@ -1,9 +1,7 @@
-// Unmarshall ConfigurationOverrides structure
-if desired.ko.Spec.Configuration != nil {
-  var config svcsdk.ConfigurationOverrides
-  err := json.Unmarshal(desired.ko.Spec.Configuration, &config)
-  if err != nil {
-    return err
-  }
-  input.ConfigurationOverrides = &config
-}
+    // Unmarshall ConfigurationOverrides structure
+    if desired.ko.Spec.Configuration != nil {
+        input.ConfigurationOverrides, err = stringToConfigurationOverrides(desired.ko.Spec.Configuration)
+        if err != nil {
+          return nil, err
+        }
+    }
