@@ -26,6 +26,7 @@ import (
 // jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on
 // EKS.
 type JobRunSpec struct {
+	Configuration *string `json:"configuration,omitempty"`
 	// The execution role ARN for the job run.
 	// +kubebuilder:validation:Required
 	ExecutionRoleARN *string `json:"executionRoleARN"`
