@@ -38,7 +38,7 @@ spec:
               jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR
               on EKS."
             properties:
-              configuration:
+              configurationOverrides:
                 type: string
               executionRoleARN:
                 description: The execution role ARN for the job run.

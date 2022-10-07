@@ -86,12 +86,6 @@ func (rm *resourceManager) sdkFind(
 	// Merge in the information we read from the API call above to the copy of
 	// the original Kubernetes object we passed to the function
 	ko := r.ko.DeepCopy()
-	if resp.JobRun.ConfigurationOverrides != nil {
-		ko.Spec.Configuration, err = cfgToString(resp.JobRun.ConfigurationOverrides)
-		if err != nil {
-			return nil, err
-		}
-	}
 
 	if ko.Status.ACKResourceMetadata == nil {
 		ko.Status.ACKResourceMetadata = &ackv1alpha1.ResourceMetadata{}
@@ -208,13 +202,6 @@ func (rm *resourceManager) sdkCreate(
 	input, err := rm.newCreateRequestPayload(ctx, desired)
 	if err != nil {
 		return nil, err
-	}
-	// Unmarshall ConfigurationOverrides structure
-	if desired.ko.Spec.Configuration != nil {
-		input.ConfigurationOverrides, err = stringToConfigurationOverrides(desired.ko.Spec.Configuration)
-		if err != nil {
-			return nil, err
-		}
 	}
 
 	var resp *svcsdk.StartJobRunOutput
@@ -480,6 +467,12 @@ func (rm *resourceManager) getImmutableFieldChanges(
 	delta *ackcompare.Delta,
 ) []string {
 	var fields []string
+	if delta.DifferentAt("Spec.ExecutionRoleARN") {
+		fields = append(fields, "ExecutionRoleARN")
+	}
+	if delta.DifferentAt("Spec.JobDriver") {
+		fields = append(fields, "JobDriver")
+	}
 	if delta.DifferentAt("Spec.Name") {
 		fields = append(fields, "Name")
 	}
@@ -489,14 +482,8 @@ func (rm *resourceManager) getImmutableFieldChanges(
 	if delta.DifferentAt("Spec.VirtualClusterId") {
 		fields = append(fields, "VirtualClusterId")
 	}
-	if delta.DifferentAt("Spec.Configuration") {
-		fields = append(fields, "Configuration")
-	}
-	if delta.DifferentAt("Spec.ExecutionRoleARN") {
-		fields = append(fields, "ExecutionRoleARN")
-	}
-	if delta.DifferentAt("Spec.JobDriver") {
-		fields = append(fields, "JobDriver")
+	if delta.DifferentAt("Spec.configurationOverrides") {
+		fields = append(fields, "configurationOverrides")
 	}
 
 	return fields

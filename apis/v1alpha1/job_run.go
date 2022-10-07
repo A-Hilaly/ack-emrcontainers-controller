@@ -26,7 +26,6 @@ import (
 // jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on
 // EKS.
 type JobRunSpec struct {
-	Configuration *string `json:"configuration,omitempty"`
 	// The execution role ARN for the job run.
 	// +kubebuilder:validation:Required
 	ExecutionRoleARN *string `json:"executionRoleARN"`
@@ -43,6 +42,8 @@ type JobRunSpec struct {
 	// The virtual cluster ID for which the job run request is submitted.
 	VirtualClusterID  *string                                  `json:"virtualClusterID,omitempty"`
 	VirtualClusterRef *ackv1alpha1.AWSResourceReferenceWrapper `json:"virtualClusterRef,omitempty"`
+
+	ConfigurationOverrides *string `json:"configurationOverrides,omitempty"`
 }
 
 // JobRunStatus defines the observed state of JobRun

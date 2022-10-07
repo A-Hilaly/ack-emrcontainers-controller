@@ -40,14 +40,8 @@ func newResourceDelta(
 		delta.Add("", a, b)
 		return delta
 	}
+	customPreCompare(delta, a, b)
 
-	if ackcompare.HasNilDifference(a.ko.Spec.Configuration, b.ko.Spec.Configuration) {
-		delta.Add("Spec.Configuration", a.ko.Spec.Configuration, b.ko.Spec.Configuration)
-	} else if a.ko.Spec.Configuration != nil && b.ko.Spec.Configuration != nil {
-		if *a.ko.Spec.Configuration != *b.ko.Spec.Configuration {
-			delta.Add("Spec.Configuration", a.ko.Spec.Configuration, b.ko.Spec.Configuration)
-		}
-	}
 	if ackcompare.HasNilDifference(a.ko.Spec.ExecutionRoleARN, b.ko.Spec.ExecutionRoleARN) {
 		delta.Add("Spec.ExecutionRoleARN", a.ko.Spec.ExecutionRoleARN, b.ko.Spec.ExecutionRoleARN)
 	} else if a.ko.Spec.ExecutionRoleARN != nil && b.ko.Spec.ExecutionRoleARN != nil {
@@ -110,6 +104,13 @@ func newResourceDelta(
 	}
 	if !reflect.DeepEqual(a.ko.Spec.VirtualClusterRef, b.ko.Spec.VirtualClusterRef) {
 		delta.Add("Spec.VirtualClusterRef", a.ko.Spec.VirtualClusterRef, b.ko.Spec.VirtualClusterRef)
+	}
+	if ackcompare.HasNilDifference(a.ko.Spec.ConfigurationOverrides, b.ko.Spec.ConfigurationOverrides) {
+		delta.Add("Spec.ConfigurationOverrides", a.ko.Spec.ConfigurationOverrides, b.ko.Spec.ConfigurationOverrides)
+	} else if a.ko.Spec.ConfigurationOverrides != nil && b.ko.Spec.ConfigurationOverrides != nil {
+		if *a.ko.Spec.ConfigurationOverrides != *b.ko.Spec.ConfigurationOverrides {
+			delta.Add("Spec.ConfigurationOverrides", a.ko.Spec.ConfigurationOverrides, b.ko.Spec.ConfigurationOverrides)
+		}
 	}
 
 	return delta
