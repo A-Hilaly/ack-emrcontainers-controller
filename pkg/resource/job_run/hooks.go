@@ -51,7 +51,7 @@ func customPreCompare(
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
 	} else if aConfig.ApplicationConfiguration != nil && bConfig.ApplicationConfiguration != nil {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
-	} else if aConfig.ApplicationConfiguration != nil && *bConfig.ApplicationConfiguration == "null" {
+	} else if aConfig.ApplicationConfiguration == nil && *bConfig.ApplicationConfiguration == "null" {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
 	}
 
@@ -62,7 +62,7 @@ func customPreCompare(
 			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.PersistentAppUI, bConfig.MonitoringConfiguration.PersistentAppUI)
 		} else if aConfig.MonitoringConfiguration.PersistentAppUI != nil && bConfig.MonitoringConfiguration.PersistentAppUI != nil {
 			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.PersistentAppUI, bConfig.MonitoringConfiguration.PersistentAppUI)
-		} else if aConfig.MonitoringConfiguration.PersistentAppUI != nil && *bConfig.MonitoringConfiguration.PersistentAppUI == "ENABLED" {
+		} else if aConfig.MonitoringConfiguration.PersistentAppUI == nil && *bConfig.MonitoringConfiguration.PersistentAppUI == "ENABLED" {
 			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.PersistentAppUI, bConfig.MonitoringConfiguration.PersistentAppUI)
 		}
 		} else if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration) {
