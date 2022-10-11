@@ -51,9 +51,10 @@ func customPreCompare(
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
 	} else if aConfig.ApplicationConfiguration != nil && bConfig.ApplicationConfiguration != nil {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
-	} else if aConfig.ApplicationConfiguration == nil && *bConfig.ApplicationConfiguration == "null" {
-		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
 	}
+	// else if aConfig.ApplicationConfiguration == nil && *bConfig.ApplicationConfiguration == "null" {
+	// 	delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
+	// }
 
 	if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration, bConfig.MonitoringConfiguration) {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration, bConfig.MonitoringConfiguration)
@@ -65,11 +66,13 @@ func customPreCompare(
 		} else if aConfig.MonitoringConfiguration.PersistentAppUI == nil && *bConfig.MonitoringConfiguration.PersistentAppUI == "ENABLED" {
 			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.PersistentAppUI, bConfig.MonitoringConfiguration.PersistentAppUI)
 		}
-		} else if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration) {
+	} else if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration) {
 			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration)
-		} else if aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration != nil && bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration != nil { delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration)
-		} else if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration) {
-				delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration)
-				} else if aConfig.MonitoringConfiguration.S3MonitoringConfiguration != nil && bConfig.MonitoringConfiguration.S3MonitoringConfiguration != nil { delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration)
-			}
-  }
+		} else if aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration != nil && bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration != nil {
+			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration, bConfig.MonitoringConfiguration.CloudWatchMonitoringConfiguration)
+	} else if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration) {
+			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration)
+		} else if aConfig.MonitoringConfiguration.S3MonitoringConfiguration != nil && bConfig.MonitoringConfiguration.S3MonitoringConfiguration != nil {
+			delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration.S3MonitoringConfiguration, bConfig.MonitoringConfiguration.S3MonitoringConfiguration)
+	}
+}
