@@ -52,9 +52,9 @@ func customPreCompare(
 	} else if aConfig.ApplicationConfiguration != nil && bConfig.ApplicationConfiguration != nil {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
 	}
-	// else if aConfig.ApplicationConfiguration == nil && *bConfig.ApplicationConfiguration == "null" {
-	// 	delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
-	// }
+	else if aConfig.ApplicationConfiguration == nil && *bConfig.ApplicationConfiguration == "null" {
+		delta.Add("Spec.ConfigurationOverrides", aConfig.ApplicationConfiguration, bConfig.ApplicationConfiguration)
+	}
 
 	if ackcompare.HasNilDifference(aConfig.MonitoringConfiguration, bConfig.MonitoringConfiguration) {
 		delta.Add("Spec.ConfigurationOverrides", aConfig.MonitoringConfiguration, bConfig.MonitoringConfiguration)
